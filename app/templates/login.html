@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login Page</title>
+    <style>
+      /* Centering the login container */
+      .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f0f8ff; /* Light blue background */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+      }
+
+      /* Title styling */
+      .login-container h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        color: #1e3a8a; /* Dark blue title */
+      }
+
+      .login-container p {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      /* Form field styling */
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      .form-field label {
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #1e3a8a; /* Dark blue for label */
+      }
+
+      /* Input fields */
+      .input-field {
+        width: 90%;
+        max-width: 350px;
+        padding: 12px;
+        margin: 5px auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .input-field:focus {
+        border-color: #1e3a8a; /* Dark blue border on focus */
+        box-shadow: 0 0 5px rgba(30, 58, 138, 0.5);
+      }
+
+      /* Password field container */
+      .password-field {
+        position: relative;
+      }
+
+      /* Show password icon */
+      .show-password-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 18px;
+        color: #666;
+      }
+
+      .show-password-icon:hover {
+        color: #1e3a8a; /* Dark blue hover effect */
+      }
+
+      /* Remember me & Forgot Password */
+      .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        max-width: 350px;
+        margin: 10px auto;
+        font-size: 14px;
+      }
+
+      .remember-forgot a {
+        color: #1e3a8a; /* Dark blue links */
+        text-decoration: none;
+      }
+
+      .remember-forgot a:hover {
+        text-decoration: underline;
+      }
+
+      /* Submit button animation */
+      .submit-button {
+        width: 90%;
+        max-width: 350px;
+        padding: 12px;
+        background-color: #1e3a8a; /* Dark blue background */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        margin: 0 auto;
+        display: block;
+      }
+
+      .submit-button:hover {
+        background-color: #3b82f6; /* Light blue on hover */
+        transform: scale(1.05);
+      }
+
+      .submit-button:active {
+        transform: scale(0.95);
+      }
+
+      /* OR separator */
+      .or-separator {
+        text-align: center;
+        margin: 20px 0;
+        color: #666;
+        font-weight: bold;
+      }
+
+      /* Social login buttons */
+      .social-login-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .social-login-button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        transition: 0.3s;
+      }
+
+      .facebook-button {
+        background-color: #3b5998;
+      }
+
+      .facebook-button:hover {
+        background-color: #2d4373;
+      }
+
+      .google-button {
+        background-color: #db4437;
+      }
+
+      .google-button:hover {
+        background-color: #b53024;
+      }
+
+      /* Register link */
+      .register-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+
+      .register-link a {
+        color: #1e3a8a; /* Dark blue register link */
+        text-decoration: none;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+    <form method="post" enctype="multipart/form-data">
+      {%csrf_token%}
+      <h2>Login</h2>
+      <p>Access to our dashboard</p>
+      <form action="#" method="post">
+        
+        <div class="form-field">
+          <label for="username">Username</label>
+          <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter your username"
+              class="input-field"
+              required
+          />
+      </div>
+      
+    
+      
+        <div class="form-field password-field">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            class="input-field"
+            required
+          />
+          <!-- Using a span for the eye icon. To enable show/hide functionality, you'd need JavaScript. -->
+          <span class="show-password-icon" onclick="togglePassword()">👁</span>
+        </div>
+        <div class="remember-forgot">
+          <label>
+            <input type="checkbox" name="remember" /> Remember me
+          </label>
+          <a href="/register">Forgot Password?</a>
+        </div>
+        <button type="submit" class="submit-button">Login</button>
+        <p class="or-separator">OR</p>
+        <div class="social-login-buttons">
+          <button type="button" class="social-login-button facebook-button">
+            Login with Facebook
+          </button>
+          <button type="button" class="social-login-button google-button">
+            Login with Google
+          </button>
+        </div>
+        <p class="register-link">
+          Don't have an account? <a href="register">Register</a>
+        </p>
+      </form>
+    </div>
+
+    <script>
+      // Simple JavaScript to toggle password visibility
+      function togglePassword() {
+        var passwordField = document.getElementById("password");
+        if (passwordField.type === "password") {
+          passwordField.type = "text";
+        } else {
+          passwordField.type = "password";
+        }
+      }
+    </form>
+    </script>
+  </body>
+</html>

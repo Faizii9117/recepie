@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> this is index page </h1>
+    {{people}}
+    <style>
+        table, th, td {
+          border:1px solid black;
+        }
+        </style>
+        <body>
+        
+        
+        <table style="width:100%">
+          <tr>
+            <th>sr.no</th>
+            <th>name</th>
+            <th>age</th>
+            <th>Elegibility </th>
+          </tr>
+          {%for students in school%}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{students.name}}</td>
+            <td>{{students.age }}</td>
+            <td>
+              {% if students.age == 18 %}
+              They can vote
+              {% else %}
+              They cannot vote
+              {% endif %}
+          
+            </td>
+
+
+          </tr>
+        {% endfor %}
+        </table>
+        
+        
+        
+        
+        
+        
+</body>
+</html>

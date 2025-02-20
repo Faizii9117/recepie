@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Form</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        form {
+            max-width: 450px;
+            margin: auto;
+            padding: 20px;
+            background: #252525;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        label {
+            flex: 1;
+            text-align: left;
+            padding-right: 10px;
+        }
+
+        input, textarea {
+            flex: 2;
+            background: #333;
+            border: 1px solid #444;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            width: 100%;
+        }
+
+        button {
+            background: #ff5722;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e64a19;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #252525;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #444;
+            color: white;
+        }
+
+        th {
+            background: #ff5722;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Submit Your Recipe</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="form-group">
+                <label for="recepie_name">Recipe Name:</label>
+                <input type="text" id="recepie_name" name="recepie_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="recepie_desc">Recipe Description:</label>
+                <textarea id="recipe_description" name="recepie_desc" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="recepie_image">Upload Image:</label>
+                <input type="file" name="recepie_image" accept="image/*">
+            </div>
+
+            <button type="submit">Submit Recipe</button>
+        </form>
+        
+        <table style="width:100%">
+            <tr>
+              <th>sr.no</th>
+              <th>recepie_name</th>
+              <th>recepie_desc</th>
+              <th>recepie_image </th>
+              <th>Actions</th>  
+            </tr>
+            {%for data in recepie_data%}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{data.recepie_name}}</td>
+              <td>{{data.recepie_desc }}</td>
+              <td>
+                <img src="/media/{{ data.recepie_image }}" style="height:120px; width:120px;">
+            </td>
+              <td>
+                <a href="/delete-recepie/{{data.id}}/" class="btn btn-danger">Delete</a>
+              </td>
+    
+    
+            </tr>
+          {% endfor %}
+          </table>
+    
+    </div>
+</body>
+</html>
