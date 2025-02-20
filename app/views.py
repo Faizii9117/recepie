@@ -98,7 +98,6 @@ def register(request):
 
         print("✅ User created and saved in the database.")  # Debugging
 
-        messages.success(request, "Account created successfully! Please log in.")
         return redirect("login")
 
     return render(request, "register.html")
