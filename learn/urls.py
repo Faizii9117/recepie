@@ -24,13 +24,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',recepie, name='index'),
-    #path('recepie/',recepie, name='recepie'),
-    path('login/',auth_login_view, name='login'),
-    path('delete-recepie/<int:id>/', delete_recepie, name="delete_recepie"),
-    path("login/register/", register, name="register"),
-]
 
+    path('', recepie, name="recepie"), 
+    path('login/', login_view, name="login"),
+    path('login/register/', register, name="register"),
+    path('logout/', logout_view, name="logout"),
+    path('delete-recepie/<int:id>/', delete_recepie, name="delete_recepie"),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

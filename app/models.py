@@ -13,6 +13,11 @@ class login_api(models.Model):
     password1 = models.CharField(max_length=100)
     password2 = models.CharField(max_length=100)
 
+
+    def __str__(self):
+        return self.username
+    
+
 # class register(models.Model):
 #      username = models.CharField(max_length=100)
 #      password = models.CharField(max_length=100)

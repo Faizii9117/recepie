@@ -71,6 +71,21 @@
             background: #e64a19;
         }
 
+        .delete-btn {
+            background: #d32f2f;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #b71c1c;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -86,6 +101,22 @@
 
         th {
             background: #ff5722;
+        }
+
+        .logout-btn {
+            background: #d32f2f;
+            margin-top: 20px;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
         }
     </style>
 </head>
@@ -114,28 +145,32 @@
         
         <table style="width:100%">
             <tr>
-              <th>sr.no</th>
-              <th>recepie_name</th>
-              <th>recepie_desc</th>
-              <th>recepie_image </th>
+              <th>Sr. No</th>
+              <th>Recipe Name</th>
+              <th>Recipe Description</th>
+              <th>Recipe Image</th>
               <th>Actions</th>  
             </tr>
-            {%for data in recepie_data%}
+            {% for data in recepie_data %}
             <tr>
-              <td>{{forloop.counter}}</td>
-              <td>{{data.recepie_name}}</td>
-              <td>{{data.recepie_desc }}</td>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ data.recepie_name }}</td>
+              <td>{{ data.recepie_desc }}</td>
               <td>
                 <img src="/media/{{ data.recepie_image }}" style="height:120px; width:120px;">
-            </td>
-              <td>
-                <a href="/delete-recepie/{{data.id}}/" class="btn btn-danger">Delete</a>
               </td>
-    
-    
+              <td>
+                <form method="post" action="/delete-recepie/{{ data.id }}/">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+              </td>
             </tr>
-          {% endfor %}
-          </table>
+            {% endfor %}
+        </table>
+
+        <!-- Logout Button -->
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
     
     </div>
 </body>

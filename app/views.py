@@ -44,21 +44,25 @@ def recepie(request):
 
 
 
-def auth_login_view(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
 
-        user = authenticate(username=username, password=password)
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "").strip()
+
+        user = authenticate(request, username=username, password=password)  # ✅ Authenticate using Django User model
 
         if user is not None:
-            auth_login(request, user)
-            return redirect("/")
+            auth_login(request, user)  # ✅ Correct login function
+            messages.success(request, "Login successful!")
+            return redirect("recepie")  # Redirect to your recipe page
         else:
             messages.error(request, "Invalid username or password.")
-            return render(request, "login.html")
+            return redirect("login")
 
     return render(request, "login.html")
+
+
 
 def delete_recepie(request,id):
     queryset=vegi.objects.get(id=id)
@@ -67,6 +71,7 @@ def delete_recepie(request,id):
 
 
 
+from django.contrib.auth.hashers import make_password, check_password
 
 def register(request):
     if request.method == "POST":
@@ -74,30 +79,30 @@ def register(request):
         password1 = request.POST.get("password1", "").strip()
         password2 = request.POST.get("password2", "").strip()
 
-        # Debugging Output
-        print(f"📩 Received Data -> Username: {username}, Password1: {password1}")
-
-        # Check if fields are filled
         if not username or not password1 or not password2:
             messages.error(request, "All fields are required.")
             return redirect("register")
 
-        # Check if passwords match
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
             return redirect("register")
 
-        # Check if username already exists
         if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists. Choose another.")
+            messages.error(request, "Username already exists.")
             return redirect("register")
 
-        # ✅ Create user correctly using `create_user`
+        # ✅ Correct way to create a user
         user = User.objects.create_user(username=username, password=password1)
-        user.save()
 
-        print("✅ User created and saved in the database.")  # Debugging
-
+        messages.success(request, "Account created successfully! Please log in.")
         return redirect("login")
 
     return render(request, "register.html")
+
+
+
+def logout_view(request):
+    auth_logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect("login")
+
